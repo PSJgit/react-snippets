@@ -2,13 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Async from './components/Async/Async';
 import GeoLocation from './components/GeoLocation/GeoLocation';
-import './index.css';
 
 export default function App() {
  
   return (
     <Router>
-
       <nav>
         <ul>
           <li>

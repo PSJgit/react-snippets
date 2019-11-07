@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
-import useResources from './useResources'
+import useResources from './useResources';
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 /* Main component
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+  }
+}));
+
 const Async = () => {
+
   const [ resourceType, setResourceType ] = useState('posts');
+  const classes = useStyles();
 
   return (
     <>
-      <button onClick={() => {setResourceType('posts')}}>Posts</button>
-      <button onClick={() => {setResourceType('todos')}}>Todos</button>
+    <Button variant="contained" color="primary" className={classes.button} onClick={() => {setResourceType('posts')}}>
+      Posts
+    </Button>
 
-      <ResourceList resourceType={resourceType}/>
+    <Button variant="contained" color="primary" className={classes.button} onClick={() => {setResourceType('todos')}}>
+      Todos
+    </Button>
+
+    <ResourceList resourceType={resourceType}/>
     </>
   )
 }
