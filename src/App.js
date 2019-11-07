@@ -1,16 +1,34 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Async from './components/Async/Async';
+import './index.css';
 
-import AsyncContainer from './components/Async/Async';
+export default function App() {
+ 
+  return (
+    <Router>
 
-class App extends React.Component {
+      <nav>
+        <ul>
+          <li>
+            <Link to='/'>Home</Link>
+          </li>
+          <li>
+            <Link to="/async">Async</Link>
+          </li>
+        </ul>
+      </nav>
 
-  render() {
-    return (
-      <>
-        <AsyncContainer/>
-      </>
-    )
-  }
+      <Switch>
+        <Route path="/async">
+          <Async />
+        </Route>
+        <Route path="/">
+          <div>home</div>
+        </Route>
+      </Switch>
+
+    </Router>
+  )
 }
 
-export default App;

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 
-const AsyncContainer = () => {
+const Async = () => {
   const [ resource, setResource ] = useState('posts');
 
   return (
@@ -13,13 +14,38 @@ const AsyncContainer = () => {
   )
 }
 
-const ResourceList = () => {
+const ResourceList = ({ resource }) => {
 
+  const [ resources, setResources ] = useState([])
+
+  const fetchResource = useCallback(async () => {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/${resource}`
+    );
+
+    setResources(response.data)
+  }, [resource]);
+
+  useEffect(() => {
+    fetchResource(resource);
+    // we could invoke fetchResource directly in useEffect IF we wrap it in an IIFE
+    /* 
+      (async resource => {
+        const response = await axios.get(
+          `https://jsonplaceholder.typicode.com/${resource}`
+        );
+
+        setResources(response.data);
+      })()
+    */
+  }, [fetchResource, resource]);
+
+  
   return (
-    <>
-
-    </>
+    <div>
+      {`${resource} available: ${resources.length}`}
+    </div>
   )
 }
 
-export default AsyncContainer;
+export default Async;
