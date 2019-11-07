@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Async from './components/Async/Async';
-import Location from './components/Location/Location';
+import GeoLocation from './components/GeoLocation/GeoLocation';
 import './index.css';
 
 export default function App() {
@@ -28,7 +28,7 @@ export default function App() {
           <Async />
         </Route>
         <Route path="/location">
-          <Location />
+          <GeoLocation />
         </Route>
         <Route path="/">
           <div>home</div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Spinner from './Spinner';
 import SeasonDisplay from './SeasonDisplay';
 
-const Location = () => {
+const GeoLocation = () => {
 
   const [ lat, setLat ] = useState(null);
   const [ errorMsg, setErrorMsg ] = useState('');
@@ -29,4 +29,4 @@ const Location = () => {
   )
 }
 
-export default Location;
+export default GeoLocation;
