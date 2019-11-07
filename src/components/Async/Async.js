@@ -1,49 +1,38 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import useResources from './useResources'
+
+/* Main component
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 const Async = () => {
-  const [ resource, setResource ] = useState('posts');
+  const [ resourceType, setResourceType ] = useState('posts');
 
   return (
     <>
-      <button onClick={() => {setResource('posts')}}>Posts</button>
-      <button onClick={() => {setResource('todos')}}>Todos</button>
+      <button onClick={() => {setResourceType('posts')}}>Posts</button>
+      <button onClick={() => {setResourceType('todos')}}>Todos</button>
 
-      <ResourceList resource={resource}/>
+      <ResourceList resourceType={resourceType}/>
     </>
   )
 }
 
-const ResourceList = ({ resource }) => {
+/* Resource component
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-  const [ resources, setResources ] = useState([])
+const ResourceList = ({ resourceType }) => {
 
-  const fetchResource = useCallback(async () => {
-    const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/${resource}`
-    );
+  // useResources hook
+  const resources = useResources(resourceType);
 
-    setResources(response.data)
-  }, [resource]);
-
-  useEffect(() => {
-    fetchResource(resource);
-    // we could invoke fetchResource directly in useEffect IF we wrap it in an IIFE
-    /* 
-      (async resource => {
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/${resource}`
-        );
-
-        setResources(response.data);
-      })()
-    */
-  }, [fetchResource, resource]);
-
-  
   return (
     <div>
-      {`${resource} available: ${resources.length}`}
+      {`${resourceType} available: ${resources.length}`}
+      <ul>
+        {resources.map(resource => (
+          <li key={resource.id}>{resource.title}</li>
+        ))}
+      </ul>
     </div>
   )
 }
