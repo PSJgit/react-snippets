@@ -65,9 +65,11 @@ export default function App() {
       <List>
 
           {routes.map((text, index) => (
-            <ListItem button key={text}>
-              <Link to={`/${text.toLowerCase()}`}><ListItemText primary={text}/></Link>
-            </ListItem>
+            <Link to={`/${text.toLowerCase()}`}>
+              <ListItem button key={text}>
+                <ListItemText primary={text}/>
+              </ListItem>
+            </Link>
           ))}
     
       </List>
@@ -86,7 +88,7 @@ export default function App() {
               <MenuIcon onClick={toggleDrawer(true)}/>
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              snippets
+              Snippets
             </Typography>
           
           </Toolbar>
