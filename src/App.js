@@ -22,6 +22,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import Async from './components/Async/Async';
 import GeoLocation from './components/GeoLocation/GeoLocation';
 
+const routes = ['Home', 'Async', 'GeoLocation']
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     width: 250,
   },
   fullList: {
-    width: 'auto',
+    width: 250,
   },
 }));
 
@@ -62,18 +63,13 @@ export default function App() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <Router>
-          {['Home', 'Async', 'GeoLocation'].map((text, index) => (
+
+          {routes.map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              
-                {console.warn(`/${text.toLowerCase()}`)}
-                <Link to={`/${text.toLowerCase()}`}></Link>
-              
-              
+              <Link to={`/${text.toLowerCase()}`}><ListItemText primary={text}/></Link>
             </ListItem>
           ))}
-        </Router>
+    
       </List>
       <Divider />
       
@@ -82,44 +78,30 @@ export default function App() {
 
   return (
     <>
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon onClick={toggleDrawer(true)}/>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            snippets
-          </Typography>
-         
-        </Toolbar>
-      </AppBar>
-    </div>
+     <Router>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon onClick={toggleDrawer(true)}/>
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              snippets
+            </Typography>
+          
+          </Toolbar>
+        </AppBar>
+      </div>
 
-    <Drawer open={menuState} onClose={toggleDrawer(false)}>
-      {fullList()}
-    </Drawer>
-
-    <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to="/async">Async</Link>
-          </li>
-          <li>
-            <Link to="/location">Location</Link>
-          </li>
-        </ul>
-      </nav>
+      <Drawer open={menuState} onClose={toggleDrawer(false)}>
+        {fullList()}
+      </Drawer>
 
       <Switch>
         <Route path="/async">
           <Async />
         </Route>
-        <Route path="/location">
+        <Route path="/geolocation">
           <GeoLocation />
         </Route>
         <Route path="/">
