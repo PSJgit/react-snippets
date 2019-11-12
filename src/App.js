@@ -4,25 +4,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
 import Drawer from '@material-ui/core/Drawer';
-
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 // snippets 
 import Async from './components/Async/Async';
 import GeoLocation from './components/GeoLocation/GeoLocation';
+import Counter from './components/Counter/Counter';
 
-const routes = ['Home', 'Async', 'GeoLocation']
+const routes = ['Home', 'Async', 'GeoLocation', 'Counter']
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   list: {
     width: 250,
   },
-  fullList: {
+  menu: {
     width: 250,
   },
 }));
@@ -46,7 +41,7 @@ export default function App() {
   
   const classes = useStyles();
 
-  const [menuState, setMenuState] = React.useState(false);
+  const [ menuState, setMenuState ] = React.useState(false);
 
   const toggleDrawer = open => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -55,26 +50,23 @@ export default function App() {
     setMenuState(open);
   };
 
-  const fullList = () => (
+  const menu = () => (
     <div
-      className={classes.fullList}
+      className={classes.menu}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-
-          {routes.map((text, index) => (
-            <Link to={`/${text.toLowerCase()}`}>
-              <ListItem button key={text}>
-                <ListItemText primary={text}/>
-              </ListItem>
-            </Link>
-          ))}
-    
+        {routes.map((text) => (
+          <Link to={`/${text.toLowerCase()}`} key={text.toLowerCase()}>
+            <ListItem button key={text}>
+              <ListItemText primary={text}/>
+            </ListItem>
+          </Link>
+        ))}
       </List>
       <Divider />
-      
     </div>
   );
 
@@ -82,10 +74,10 @@ export default function App() {
     <>
      <Router>
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" color='primary'>
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              <MenuIcon onClick={toggleDrawer(true)}/>
+            <IconButton onClick={toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
               Snippets
@@ -96,7 +88,7 @@ export default function App() {
       </div>
 
       <Drawer open={menuState} onClose={toggleDrawer(false)}>
-        {fullList()}
+        {menu()}
       </Drawer>
 
       <Switch>
@@ -105,6 +97,9 @@ export default function App() {
         </Route>
         <Route path="/geolocation">
           <GeoLocation />
+        </Route>
+        <Route path="/counter">
+          <Counter count={5}/>
         </Route>
         <Route path="/">
           <div>home</div>
