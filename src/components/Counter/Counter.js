@@ -21,19 +21,24 @@ const Counter = (props) => {
   const classes = useStyles();
   const [ count, setCount ] = useState(props.count);
   const [ text, setText ] = useState('');
+  
 
   useEffect(() => {
-    
-  }, []);
+    document.title = `The ${text || 'count'} is ${count}`;
+
+    return () => {
+      document.title = 'React App';
+    }
+  }, [text, count]);
 
   return (
     <>
       <p>The current {text || 'count'} is {count}</p>
       <Button variant="contained" color="primary" className={classes.button} onClick={() => {setCount(count - 1)}}>-1</Button>
-      <Button variant="contained" color="primary" className={classes.button} onClick={() => {setCount(0)}}>reset</Button>
+      <Button variant="contained" color="primary" className={classes.button} onClick={() => {setCount(props.count)}}>reset</Button>
       <Button variant="contained" color="primary" className={classes.button} onClick={() => {setCount(count + 1)}}>+1</Button>
 
-      <TextField id="counter-input" className={classes.textField} label="counter" value={text} onChange={(e) => setText(e.target.value)}/>
+      <TextField id="counter-input" className={classes.textField} label="counter name" value={text} onChange={(e) => setText(e.target.value)}/>
     </>
   )
 }
